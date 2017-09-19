@@ -1,0 +1,615 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+<style>
+  
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+</style>
+
+<div class="ui fixed top pointing inverted menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    <a href="../index.html">
+      Overview and Serial Comms
+    </a>
+  </header>
+  <div class="right tab-menu menu">
+    
+    <a class="item" data-tab="serial-comms-lab-01">
+      serial-comms-lab-01
+    </a>
+    
+    <a class="item" data-tab="Equipment">
+      Equipment
+    </a>
+    
+    <a class="item" data-tab="SetUp">
+      SetUp
+    </a>
+    
+    <a class="item" data-tab="I2C-Devices">
+      I2C-Devices
+    </a>
+    
+    <a class="item" data-tab="Temp-Sensing">
+      Temp-Sensing
+    </a>
+    
+    <a class="item" data-tab="Challenge">
+      Challenge
+    </a>
+    
+    <a class="item" href="../../index.html">
+      <i class="home icon"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    
+      
+        <a class="active item" href="../../topic01/book-1-I2C/index.html">
+          serial-comms-lab-01
+        </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+      <div  class="ui tab segment lab" data-tab="serial-comms-lab-01">
+        <h1>Serial Comms using I2C</h1>
+<p>This lab introduces the I2C protocol. You will build a simple temperature sensing application using I2C devices.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Equipment">
+        <h1>Set up</h1>
+<p>In this exercise you will:
+- build a simple circuit using Arduino development board
+- use built-in I2C capabilities to connect I2C devices(TMP102 and LCD display)
+- Write a program to read and display the temperature.</p>
+<h2>Equipment</h2>
+<ul>
+<li>Arduino Development Board</li>
+<li>TMP102 temperature sensor</li>
+<li>LCD display (grove I2C LCD display)</li>
+<li>Breadboard</li>
+<li>Jumper Wires</li>
+</ul>
+<h2>Software</h2>
+<ul>
+<li>Arduino IDE</li>
+</ul>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="SetUp">
+        <h1>TMP 102 Temperature Sensor Circuit</h1>
+<h2>Download librarys</h2>
+<p>Download the following libraries:</p>
+<p><a href="https://github.com/sparkfun/SparkFun_TMP102_Arduino_Library/archive/master.zip">Sparkfun TMP102 library</a></p>
+<p><a href="https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight/archive/master.zip">Grove LCD RGB Backlight</a></p>
+<p>Both of these libraries are specific to their devices however both require I2C protocol (that&#39;s why both devices are on the same bus).
+They provide nice programming abstractions that allow us to access the devices from the arduino program. </p>
+<h2>Install arduino libraries</h2>
+<ul>
+<li>Open Arduino IDE on your laptop. </li>
+<li><p>Click on Sketch &gt; Include Library &gt; Add .ZIP Library.
+<img src="./img/add_library_1.png" alt="Arduino add lib"></p>
+</li>
+<li><p>Add both libraries. To check if the install was successfull, click on  Sketch &gt; Include Library &gt;
+<img src="./img/libraries.png" alt="Arduino add lib"></p>
+</li>
+</ul>
+<h2>Circuit</h2>
+<p>Build the following circuit:
+<img src="./img/circuit_bb.png" alt="Temperature Circuit"></p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="I2C-Devices">
+        <h1>I2C Devices</h1>
+<p>I2C (Inter-Integrated Circuit) is a short distance serial interface that requires only 2 bus lines for data transfer. You will notice in the circuit you built that both the temp sensor and the LCD display are on the same 2 wire bus connected to the Arduino board, a serial data line (SDA) and a serial clock line (SCL).
+I2C is a Master/Slave protocol - only a Master can initiate a data transfer and Slaves respond to the Master. </p>
+<h2>Starting communication</h2>
+<p>A Start condition is issued by the Master device to inform all the slave devices that something is about to be transmitted on the bus. As a result, all connected slave devices will listen to the serial data line for instructions. The Start condition is issued by pulling the SDA line low followed by the SCL line. Once the data transfer is finished, the bus Master sends a Stop condition to inform other devices that it would like to release the bus. 
+<img src="./img/start.png" alt="I2C Start and Stop"></p>
+<h2>Addressing</h2>
+<p>Each device  connected to the bus is software addressable by a unique 7-bit address. The first byte sent after the Start condition is known as Control byte. The first seven bits of the control byte make up the slave address, whereas the eighth bit (LSB) indicates Read/Write. A ‘zero’ in the LSB of the first byte indicates that the Master will write information to a selected slave. A ‘one’ in this position indicates that the Master will read data from the slave. 
+Some devices have their I2C addresses fixed (e.g. the LCD). Those devices that allow the address modification(e.g. the temp sensor), typically the first four bits are fixed and the next three bits are set by hardware address pins (A0, A1, and A2) that allow the user to modify the  I2C address allowing  up to eight of the same devices to operate on the I2C bus.
+<img src="./img/address.png" alt="I2C address"></p>
+<h2>Scan for I2C devices</h2>
+<p>The following Arduino sketch scans the I2C bus for active devices. Copy and run this code on your arduino; you should detect the LCD and the sparkfun Controller.</p>
+<pre><code class="lang-c">#include &lt;Wire.h&gt;
+
+
+void setup()
+{
+  Wire.begin();
+
+  Serial.begin(9600);
+  while (!Serial);             // Leonardo: wait for serial monitor
+  Serial.println(&quot;\nI2C Scanner&quot;);
+}
+
+
+void loop()
+{
+  byte error, address;
+  int nDevices;
+
+  Serial.println(&quot;Scanning...&quot;);
+
+  nDevices = 0;
+  for(address = 1; address &lt; 127; address++ )
+  {
+    // The i2c_scanner uses the return value of
+    // the Write.endTransmisstion to see if
+    // a device did acknowledge to the address.
+    Wire.beginTransmission(address);
+    error = Wire.endTransmission();
+
+    if (error == 0)
+    {
+      Serial.print(&quot;I2C device found at address 0x&quot;);
+      if (address&lt;16)
+        Serial.print(&quot;0&quot;);
+      Serial.print(address,HEX);
+      Serial.println(&quot;  !&quot;);
+
+      nDevices++;
+    }
+    else if (error==4)
+    {
+      Serial.print(&quot;Unknown error at address 0x&quot;);
+      if (address&lt;16)
+        Serial.print(&quot;0&quot;);
+      Serial.println(address,HEX);
+    }    
+  }
+  if (nDevices == 0)
+    Serial.println(&quot;No I2C devices found\n&quot;);
+  else
+    Serial.println(&quot;done\n&quot;);
+
+  delay(5000);           // wait 5 seconds for next scan
+}</code></pre>
+<p>Look at the code and make sure you understand what the logic is. You should see something like the following:</p>
+<pre><code>Scanning...
+I2C device found at address 0x03  !
+I2C device found at address 0x3E  !
+I2C device found at address 0x48  !
+I2C device found at address 0x62  !
+I2C device found at address 0x70  !
+done</code></pre>
+<p>Notice there is more than one device. Suggest why this might be the case and use the internet to prove it!</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Temp-Sensing">
+        <h1>Arduino Code</h1>
+<h2>Display Temperature</h2>
+<p>The following Arduino sketch reads the temperature from the TMP102 sensor and prints it to the LCD</p>
+<pre><code class="lang-c">/******************************************************************************
+I2C Exercise
+Sept 15th 2017
+~
+
+This sketch configures the TMP102 temperature sensor and prints the
+temperature on a Grove-LCD RGB 
+
+Resources:
+Wire.h (included with Arduino IDE)
+SparkFunTMP102.h
+rgb_lcd.h
+
+Development environment specifics:
+Arduino 1.8 IDE
+Arduino Uno
+
+******************************************************************************/
+
+#include &lt;Wire.h&gt; // Used to establied serial communication on the I2C bus
+#include &lt;SparkFunTMP102.h&gt; // Used to send and recieve specific information from our sensor
+#include &lt;rgb_lcd.h&gt; // Used to send temp information to LCD
+
+const int ALERT_PIN = A3;
+
+rgb_lcd lcd;
+
+const int colorR = 255;
+const int colorG = 0;
+const int colorB = 0;
+
+TMP102 tmpSensor(0x48); // Initialize sensor at I2C address 0x48
+
+
+void setup() {
+  Serial.begin(9600); // Start serial communication at 9600 baud
+  pinMode(ALERT_PIN,INPUT);  // Declare alertPin as an input
+  tmpSensor.begin();  // Join I2C bus
+
+  // Initialize tmpSensor settings
+  // These settings are saved in the sensor, even if it loses power
+
+  // set the number of consecutive faults before triggering alarm.
+  // 0-3: 0:1 fault, 1:2 faults, 2:4 faults, 3:6 faults.
+  tmpSensor.setFault(0);  // Trigger alarm immediately
+
+  // set the polarity of the Alarm. (0:Active LOW, 1:Active HIGH).
+  tmpSensor.setAlertPolarity(1); // Active HIGH
+
+  // set the sensor in Comparator Mode (0) or Interrupt Mode (1).
+  tmpSensor.setAlertMode(0); // Comparator Mode.
+
+  // set the Conversion Rate (how quickly the sensor gets a new reading)
+  //0-3: 0:0.25Hz, 1:1Hz, 2:4Hz, 3:8Hz
+  tmpSensor.setConversionRate(2);
+
+  //set Extended Mode.
+  //0:12-bit Temperature(-55C to +128C) 1:13-bit Temperature(-55C to +150C)
+  tmpSensor.setExtendedMode(0);
+
+  //set T_HIGH, the upper limit to trigger the alert on
+  tmpSensor.setHighTempC(29.4); // set T_HIGH in C
+
+  //set T_LOW, the lower limit to shut turn off the alert
+  tmpSensor.setLowTempC(26.67); // set T_LOW in C
+
+
+   // set up the LCD&#39;s number of columns and rows:
+    lcd.begin(16, 2);
+
+    lcd.setRGB(colorR, colorG, colorB);
+
+    // Print a message to the LCD.
+    lcd.print(&quot;hello, IoT3&quot;);
+
+    delay(1000);
+}
+
+void loop()
+{
+  float temperature;
+  boolean alertPinState, alertRegisterState;
+
+  // Turn sensor on to start temperature measurement.
+  // Current consumtion typically ~10uA.
+  tmpSensor.wakeup();
+
+  // read temperature data
+  temperature = tmpSensor.readTempC();
+
+  // Check for Alert
+  alertPinState = digitalRead(ALERT_PIN); // read the Alert from pin
+  alertRegisterState = tmpSensor.alert();   // read the Alert from register
+
+  // Place sensor in sleep mode to save power.
+  // Current consumtion typically &lt;0.5uA.
+  tmpSensor.sleep();
+
+  // Print temperature and alarm state
+  Serial.print(&quot;Temp: &quot;);
+  Serial.print(temperature);
+
+  Serial.print(&quot;\tAlert Pin: &quot;);
+  Serial.print(alertPinState);
+
+  Serial.print(&quot;\tAlert Register: &quot;);
+  Serial.println(alertRegisterState);
+
+
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+  lcd.print(&quot;Temp: &quot;);
+  lcd.print(temperature);
+
+  delay(1000);  // Wait 1000ms
+}</code></pre>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Challenge">
+        <h1>Arduino Code</h1>
+<h2>Display Temperature</h2>
+<p>The following Arduino sketch reads the temperature from the TMP102 sensor and prints it to the LCD</p>
+<pre><code class="lang-c">/******************************************************************************
+I2C Exercise
+Sept 15th 2017
+~
+
+This sketch configures the TMP102 temperature sensor and prints the
+temperature on a Grove-LCD RGB 
+
+Resources:
+Wire.h (included with Arduino IDE)
+SparkFunTMP102.h
+rgb_lcd.h
+
+Development environment specifics:
+Arduino 1.8 IDE
+Arduino Uno
+
+******************************************************************************/
+
+#include &lt;Wire.h&gt; // Used to establied serial communication on the I2C bus
+#include &lt;SparkFunTMP102.h&gt; // Used to send and recieve specific information from our sensor
+#include &lt;rgb_lcd.h&gt; // Used to send temp information to LCD
+
+const int ALERT_PIN = A3;
+
+rgb_lcd lcd;
+
+const int colorR = 255;
+const int colorG = 0;
+const int colorB = 0;
+
+TMP102 tmpSensor(0x48); // Initialize sensor at I2C address 0x48
+
+
+void setup() {
+  Serial.begin(9600); // Start serial communication at 9600 baud
+  pinMode(ALERT_PIN,INPUT);  // Declare alertPin as an input
+  tmpSensor.begin();  // Join I2C bus
+
+  // Initialize tmpSensor settings
+  // These settings are saved in the sensor, even if it loses power
+
+  // set the number of consecutive faults before triggering alarm.
+  // 0-3: 0:1 fault, 1:2 faults, 2:4 faults, 3:6 faults.
+  tmpSensor.setFault(0);  // Trigger alarm immediately
+
+  // set the polarity of the Alarm. (0:Active LOW, 1:Active HIGH).
+  tmpSensor.setAlertPolarity(1); // Active HIGH
+
+  // set the sensor in Comparator Mode (0) or Interrupt Mode (1).
+  tmpSensor.setAlertMode(0); // Comparator Mode.
+
+  // set the Conversion Rate (how quickly the sensor gets a new reading)
+  //0-3: 0:0.25Hz, 1:1Hz, 2:4Hz, 3:8Hz
+  tmpSensor.setConversionRate(2);
+
+  //set Extended Mode.
+  //0:12-bit Temperature(-55C to +128C) 1:13-bit Temperature(-55C to +150C)
+  tmpSensor.setExtendedMode(0);
+
+  //set T_HIGH, the upper limit to trigger the alert on
+  tmpSensor.setHighTempC(29.4); // set T_HIGH in C
+
+  //set T_LOW, the lower limit to shut turn off the alert
+  tmpSensor.setLowTempC(26.67); // set T_LOW in C
+
+
+   // set up the LCD&#39;s number of columns and rows:
+    lcd.begin(16, 2);
+
+    lcd.setRGB(colorR, colorG, colorB);
+
+    // Print a message to the LCD.
+    lcd.print(&quot;hello, IoT3&quot;);
+
+    delay(1000);
+}
+
+void loop()
+{
+  float temperature;
+  boolean alertPinState, alertRegisterState;
+
+  // Turn sensor on to start temperature measurement.
+  // Current consumtion typically ~10uA.
+  tmpSensor.wakeup();
+
+  // read temperature data
+  temperature = tmpSensor.readTempC();
+
+  // Check for Alert
+  alertPinState = digitalRead(ALERT_PIN); // read the Alert from pin
+  alertRegisterState = tmpSensor.alert();   // read the Alert from register
+
+  // Place sensor in sleep mode to save power.
+  // Current consumtion typically &lt;0.5uA.
+  tmpSensor.sleep();
+
+  // Print temperature and alarm state
+  Serial.print(&quot;Temp: &quot;);
+  Serial.print(temperature);
+
+  Serial.print(&quot;\tAlert Pin: &quot;);
+  Serial.print(alertPinState);
+
+  Serial.print(&quot;\tAlert Register: &quot;);
+  Serial.println(alertRegisterState);
+
+
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+  lcd.print(&quot;Temp: &quot;);
+  lcd.print(temperature);
+
+  delay(1000);  // Wait 1000ms
+}</code></pre>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+  <div class="ui bottom fixed borderless right menu">
+    <div class="ui right tiny menu">
+      <div class="ui mini message segment">
+        Frank Walsh (fxwalsh@wit.ie).
+        <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank">Creative Commons License
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on('keydown', function (e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+</script>
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>
