@@ -137,6 +137,10 @@ body
       Run_as_Service
     </a>
     
+    <a class="item" data-tab="Eddystone-URL">
+      Eddystone-URL
+    </a>
+    
     <a class="item" href="../../index.html">
       <i class="home icon"></i>
     </a>
@@ -279,6 +283,14 @@ esac</code></pre>
 <pre><code>sudo chmod +x /etc/init.d/beacon</code></pre>
 <p>We want the beacon to run as a service. We can use <code>update-rc.d</code> to register the service and configure it to start when the pi boots, and stop when it shuts down. Run the following to do this. </p>
 <pre><code>sudo update-rc.d beacon start 80 2 3 4 5 . stop 30 0 1 6 .</code></pre>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Eddystone-URL">
+        <h2>Eddystone-URL</h2>
+<p>Reconfigure your pi beacon to be an Eddystone URL beacon.
+Refer to the following tutorial as a guide:</p>
+<p><a href="https://webgazer.org/update/tutorial/2016/03/16/raspberrypi-eddystone-url.html">Eddystone URL Beacon</a></p>
 
       </div>
      
