@@ -1,0 +1,359 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+<style>
+  
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+</style>
+
+<div class="ui fixed top pointing inverted menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    <a href="../index.html">
+      Bluetooth Low Energy
+    </a>
+  </header>
+  <div class="right tab-menu menu">
+    
+    <a class="item" data-tab="01">
+      01
+    </a>
+    
+    <a class="item" data-tab="BLE-Beacons">
+      BLE-Beacons
+    </a>
+    
+    <a class="item" data-tab="Equipment">
+      Equipment
+    </a>
+    
+    <a class="item" data-tab="Headless-Pi">
+      Headless-Pi
+    </a>
+    
+    <a class="item" data-tab="Configure-Beacon">
+      Configure-Beacon
+    </a>
+    
+    <a class="item" data-tab="Run_as_Service">
+      Run_as_Service
+    </a>
+    
+    <a class="item" href="../../index.html">
+      <i class="home icon"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    
+      
+        <a class="item" href="../../topic01/book-1-I2C/index.html">
+          serial-comms-lab-01
+        </a>
+      
+    
+      
+        <a class="active item" href="../../topic02/book-1/index.html">
+          01
+        </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+      <div  class="ui tab segment lab" data-tab="01">
+        <h1>Bluetooth Low Energy</h1>
+<h2>Raspberry Pi as a Beacon</h2>
+<p>Beacons are one-way transmitters that are used to mark important places and objects. Standards are emerging in the beacon space, including Apple&#39;s iBeacon and Google&#39;s Eddystone beacon platform. 
+A beacon is detectable to a user&#39;s device from a range of a few meters, using Bluetooth Low Energy to provide contextual information to devices and applications. 
+In this lab we will use a Raspberry Pi to create a beacon. </p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="BLE-Beacons">
+        <h1>Bluetooth Low Energy</h1>
+<h2>Raspberry Pi as a Beacon</h2>
+<p>Beacons are one-way transmitters that are used to mark important places and objects. Standards are emerging in the beacon space, including Apple&#39;s iBeacon and Google&#39;s Eddystone beacon platform. 
+A beacon is detectable to a user&#39;s device from a range of a few meters, using Bluetooth Low Energy to provide contextual information to devices and applications. 
+In this lab we will use a Raspberry Pi to create a beacon. </p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Equipment">
+        <h2>Equipment</h2>
+<ul>
+<li>Raspberry Pi 3</li>
+<li>SD card with a reasonably current version of Raspbian</li>
+<li>Mobile phone with internet access</li>
+<li>Ethernet cable</li>
+</ul>
+<h3>Raspbian</h3>
+<p>Put the current stable version of Raspbian on a SSD card. You may have this already.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Headless-Pi">
+        <h3>Configure Raspberry Pi for Headless</h3>
+<p>We&#39;re using the Pi as a beacon so we do not need to access the user interface - we can do what we need using Secure Socket Shell (SSH). It would also be handy if we could connect directly to the pi from a laptop.
+Check out this tutorial for doing just that: </p>
+<p><a href="https://www.dexterindustries.com/howto/connecting-raspberry-pi-without-monitor-beginners/">Dexter Labs Tutorial</a></p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Configure-Beacon">
+        <h2>Set up Beacon</h2>
+<p>You can use hciconfig and hcitool to configure Bluetooth devices. We will create the following to make the pi act as a beacon:
+- A start script
+- A stop script
+- A config file</p>
+<ul>
+<li>On your pi create the directory  <code>/home/pi/beacon</code></li>
+<li>In <code>/home/pi/beacon</code>, create a file called <code>beacon.conf</code> and add the following contents:</li>
+</ul>
+<pre><code>#BLE beacon configuration
+export BLUETOOTH_DEVICE=hci0
+export UUID=&quot;e2 c5 6d b5 df fb 48 d2 b0 60 d0 f5 a7 10 96 e0&quot;
+export MAJOR=&quot;00 16&quot;
+export MINOR=&quot;00 08&quot;
+export POWER=&quot;c5&quot;</code></pre>
+<ul>
+<li><p>In the same folder, create a file called <code>beacon_start</code> with the following contents</p>
+<pre><code>#!/bin/sh
+. ./beacon.conf
+echo &quot;Launching virtual beacon...&quot;
+sudo hciconfig $BLUETOOTH_DEVICE up
+sudo hciconfig $BLUETOOTH_DEVICE noleadv
+sudo hciconfig $BLUETOOTH_DEVICE leadv 0
+sudo hcitool -i hci0 cmd 0x08 0x0008 1e 02 01 1a 1a ff 4c 00 02 15 $UUID $MAJOR $MIN
+echo &quot;Complete&quot;</code></pre>
+</li>
+<li><p>In the same folder, create a file called <code>beacon_stop</code> with the following contents</p>
+</li>
+</ul>
+<pre><code>#!/bin/sh
+. ./beacon.conf
+echo &quot;Disabling virtual iBeacon...&quot;
+sudo hciconfig $BLUETOOTH_DEVICE noleadv
+echo &quot;Complete&quot;</code></pre>
+<h3>Turn the beacon on</h3>
+<ul>
+<li>Run the start script as sudo and you should see the beacon. Using your smart phone, download a free beacon locator. You should see the beacon and an indication of it&#39;s proximity.</li>
+</ul>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Run_as_Service">
+        <h2>Run as a Service</h2>
+<p>You will want the beacon to start when you reboot the pi. 
+Ìn /etc/init.d/ create a file called <code>beacon</code> with the following contents:</p>
+<pre><code>#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$PATH
+
+DESC=&quot;Beacon Application Software&quot;
+PIDFILE=/var/run/beacon.pid
+SCRIPTNAME=/etc/init.d/beacon
+
+case &quot;$1&quot; in
+  start)
+    printf &quot;%-50s&quot; &quot;Starting beacon...&quot;
+    cd /home/pi/beacon
+    sudo ./beacon_start
+    ;;
+  stop)
+    printf &quot;%-50s&quot; &quot;Stopping beacon...&quot;
+    cd /home/pi/beacon
+    sudo ./beacon_stop
+    ;;
+  restart)
+    $0 stop
+   $0 start
+    ;;
+  *)
+    echo &quot;Usage: $0 {start|stop|restart}&quot;
+    exit 1
+esac</code></pre>
+<p>Now make the file executable by running the following command as the sudo user:</p>
+<pre><code>sudo chmod +x /etc/init.d/beacon</code></pre>
+<p>We want the beacon to run as a service. We can use <code>update-rc.d</code> to register the service and configure it to start when the pi boots, and stop when it shuts down. Run the following to do this. </p>
+<pre><code>sudo update-rc.d beacon start 80 2 3 4 5 . stop 30 0 1 6 .</code></pre>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+  <div class="ui bottom fixed borderless right menu">
+    <div class="ui right tiny menu">
+      <div class="ui mini message segment">
+        Frank Walsh (fxwalsh@wit.ie).
+        <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank">Creative Commons License
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on('keydown', function (e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+</script>
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>

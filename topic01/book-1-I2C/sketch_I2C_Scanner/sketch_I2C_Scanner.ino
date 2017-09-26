@@ -45,6 +45,8 @@ void loop()
       Serial.println(address,HEX);
     }    
   }
+
+  
   if (nDevices == 0)
     Serial.println("No I2C devices found\n");
   else
