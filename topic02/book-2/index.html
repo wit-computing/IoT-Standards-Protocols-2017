@@ -1,0 +1,354 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+<style>
+  
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+</style>
+
+<div class="ui fixed top pointing inverted menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    <a href="../index.html">
+      Bluetooth Low Energy
+    </a>
+  </header>
+  <div class="right tab-menu menu">
+    
+    <a class="item" data-tab="BLE Mobile App">
+      BLE Mobile App
+    </a>
+    
+    <a class="item" data-tab="Equipment and Setup">
+      Equipment and Setup
+    </a>
+    
+    <a class="item" data-tab="Get Node">
+      Get Node
+    </a>
+    
+    <a class="item" data-tab="Node App">
+      Node App
+    </a>
+    
+    <a class="item" data-tab="Mobile App">
+      Mobile App
+    </a>
+    
+    <a class="item" href="../../index.html">
+      <i class="home icon"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    
+      
+        <a class="item" href="../../topic01/book-1-I2C/index.html">
+          serial-comms-lab-01
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-1/index.html">
+          BLE Beacons
+        </a>
+      
+    
+      
+        <a class="active item" href="../../topic02/book-2/index.html">
+          BLE Mobile App
+        </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+      <div  class="ui tab segment lab" data-tab="BLE Mobile App">
+        <h1>Connecting to RPi3 using BLE</h1>
+<p>In this lab you will learn how to develop a mobile application that communicates via Bluetooth Low Energy with your Raspberry Pi 3.
+You will use Javascript and HTML to accomplish this.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Equipment and Setup">
+        <h2>You need the following tools:</h2>
+<ul>
+<li>A Raspberry Pi 3 development board - with super user access. </li>
+<li>iOS / Android phone with BLE support</li>
+<li>Evothings Studio software </li>
+</ul>
+<h2>Configure Bluetooth on the Pi</h2>
+<p>The Raspberry Pi 3 will be running a Node.js application that makes use of the Bleno library. This library requires that you have installed the Bluetooth stack, Bluez. Bluez is pre-installed in the latest releases of Raspbian. To check that Bluez is installed and which version. Do this by running the following command: </p>
+<pre><code>hcitool | grep ver</code></pre>
+<p>This command should return the version number, typically 5.* . If this is not successfull, install blueZ as follows:</p>
+<pre><code>sudo apt-get install pi-bluetooth</code></pre>
+<p>For Bleno to work, you need to stop the bluetooth daemon. The following commands will stop and check the status:</p>
+<pre><code>sudo systemctl stop bluetooth
+sudo systemctl status bluetooth</code></pre>
+<p>Verify that the status is dead.
+Now make this permenant by running the following command:</p>
+<pre><code>sudo systemctl disable bluetooth</code></pre>
+<p>You also need to power up the Bluetooth adapter after stopping the bluetooth daemon. </p>
+<pre><code>sudo hciconfig hci0 up</code></pre>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Get Node">
+        <h2>Get Node</h2>
+<p>Install Node on the Pi 3. If it&#39;s already there then you may be able to skip this step. The lab is confirmed with this version...</p>
+<p>Get Node binaries</p>
+<pre><code>wget https://nodejs.org/dist/v5.9.1/node-v5.9.1-linux-armv7l.tar.gz
+tar -xvf node-v5.9.1-linux-armv7l.tar.gz</code></pre>
+<p>Install to /usr/local</p>
+<pre><code>cd node-v5.9.1-linux-armv7l
+sudo cp -R * /usr/local/</code></pre>
+<p>To check Node.js is properly installed and you have the right version, run the command <code>node -v</code> and it should return v5.9.1</p>
+<p>Finally, update the packages and install libudev (enables hardware detection and enablement).</p>
+<pre><code>sudo apt-get update
+sudo apt-get install git libudev-dev</code></pre>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Node App">
+        <h2>The Node App</h2>
+<p>Clone the following repo to your home directory:</p>
+<pre><code>cd /home/pi
+git clone https://github.com/evothings/evothings-examples.git</code></pre>
+<p>Go to the node application in the repo and install the required dependencies</p>
+<pre><code>cd evothings-examples/evothings-examples/examples/rpi3-system-information/rpi3-application
+npm install</code></pre>
+<p>You may see the odd warning here but, hopefully, this wont affect the node app execution.
+In this folder , open <em>index.js</em> and update to the following:</p>
+<pre><code class="lang-javascript">var bleno = require(&#39;bleno&#39;);
+var name = &#39;YOUR NAME RPi&#39;;
+var SystemInformationService = require(&#39;./systeminformationservice&#39;);
+
+var systemInformationService = new SystemInformationService();
+
+bleno.on(&#39;stateChange&#39;, function(state) {
+  console.log(&#39;on -&gt; stateChange: &#39; + state);
+
+  if (state === &#39;poweredOn&#39;) {
+
+    bleno.startAdvertising(name, [systemInformationService.uuid]);
+  }
+  else {
+
+    bleno.stopAdvertising();
+  }
+});</code></pre>
+<p>Now run the app with the following command:</p>
+<pre><code>sudo node index.js</code></pre>
+<p>You shouLD see the following:</p>
+<pre><code>on -&gt; stateChange: poweredOn
+on -&gt; advertisingStart: success</code></pre>
+<p>Look at the <em>systeminformationservice.js</em>. It defines the Bluetooth service and associated characteristics:</p>
+<pre><code class="lang-javascript">var bleno = require(&#39;bleno&#39;);
+var util = require(&#39;util&#39;);
+
+var LoadAverageCharacteristic = require(&#39;./characteristics/loadaverage&#39;);
+var UptimeCharacteristic = require(&#39;./characteristics/uptime&#39;);
+var MemoryCharacteristic = require(&#39;./characteristics/memory&#39;);
+
+function SystemInformationService() {
+  bleno.PrimaryService.call(this, {
+    uuid: &#39;ff51b30e-d7e2-4d93-8842-a7c4a57dfb07&#39;,
+    characteristics: [
+      new LoadAverageCharacteristic(),
+      new UptimeCharacteristic(),
+      new MemoryCharacteristic()
+    ]
+  });
+};</code></pre>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Mobile App">
+        <h3>Mobile Application using EvoThings</h3>
+<p>Evothings is a development tool that enables users to build cross platform IoT-applications using nothing but web technologies such as HTML and JavaScript. 
+You will need to install the EvoThings workbench on your laptop/development machine and the EvoThings Viewer on your mobile phone. There is more detailed instructions available on <a href="http://evothings.com/">Evothings homepage</a>.</p>
+<p>Open the Evothings Workbench on your computer and press the Connect tab. In this tab you will connect your smartphone with your computer in order to enable live updates of your mobile application project. Press the GET KEY button to receive a key.</p>
+<p>Open the Evothings Viewer on your smartphone and enter the key in the Connect Keyfield and press the Connect button. Now you have connected your workbench to your mobile phone and you are ready to start to develop your mobile application.</p>
+<p>In the EvoThings workbench, go to examples and find an application named Raspberry Pi 3 - System Information.
+Run the application, you should see the app load on your smartphone. </p>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+  <div class="ui bottom fixed borderless right menu">
+    <div class="ui right tiny menu">
+      <div class="ui mini message segment">
+        Frank Walsh (fxwalsh@wit.ie).
+        <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank">Creative Commons License
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on('keydown', function (e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+</script>
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>
