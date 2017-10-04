@@ -113,8 +113,8 @@ body
   </header>
   <div class="right tab-menu menu">
     
-    <a class="item" data-tab="BLE Mobile App">
-      BLE Mobile App
+    <a class="item" data-tab="Intro">
+      Intro
     </a>
     
     <a class="item" data-tab="Equipment and Setup">
@@ -131,6 +131,10 @@ body
     
     <a class="item" data-tab="Mobile App">
       Mobile App
+    </a>
+    
+    <a class="item" data-tab="Updated App">
+      Updated App
     </a>
     
     <a class="item" href="../../index.html">
@@ -150,13 +154,13 @@ body
     
       
         <a class="item" href="../../topic02/book-1/index.html">
-          BLE Beacons
+          01
         </a>
       
     
       
         <a class="active item" href="../../topic02/book-2/index.html">
-          BLE Mobile App
+          Intro
         </a>
       
     
@@ -165,7 +169,7 @@ body
     <div class="ui basic segment">
       <br>
       
-      <div  class="ui tab segment lab" data-tab="BLE Mobile App">
+      <div  class="ui tab segment lab" data-tab="Intro">
         <h1>Connecting to RPi3 using BLE</h1>
 <p>In this lab you will learn how to develop a mobile application that communicates via Bluetooth Low Energy with your Raspberry Pi 3.
 You will use Javascript and HTML to accomplish this.</p>
@@ -266,13 +270,21 @@ function SystemInformationService() {
       </div>
      
       <div  class="ui tab segment lab" data-tab="Mobile App">
-        <h3>Mobile Application using EvoThings</h3>
+        <h2>Mobile Applications using EvoThings</h2>
 <p>Evothings is a development tool that enables users to build cross platform IoT-applications using nothing but web technologies such as HTML and JavaScript. 
 You will need to install the EvoThings workbench on your laptop/development machine and the EvoThings Viewer on your mobile phone. There is more detailed instructions available on <a href="http://evothings.com/">Evothings homepage</a>.</p>
 <p>Open the Evothings Workbench on your computer and press the Connect tab. In this tab you will connect your smartphone with your computer in order to enable live updates of your mobile application project. Press the GET KEY button to receive a key.</p>
 <p>Open the Evothings Viewer on your smartphone and enter the key in the Connect Keyfield and press the Connect button. Now you have connected your workbench to your mobile phone and you are ready to start to develop your mobile application.</p>
-<p>In the EvoThings workbench, go to examples and find an application named Raspberry Pi 3 - System Information.
-Run the application, you should see the app load on your smartphone. </p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Updated App">
+        <h2>Updated App</h2>
+<p>The example apps can be used as templates to build your own app.
+Clone the following <a href="https://github.com/fxwalsh/evothing-ble-demo.git">github repo</a> on both the pi and your desktop. 
+As before, start the node.js service on the pi (found in evothing-ble-demo/rpi3-application).
+On the deskop, open EvoThings Studio. Browse to the generated /evothing-ble-demo//app directory and find the index.html file. Press the My Apps button in the Evothings Studio and drag the file to the window. Now you should have an application named Raspberry Pi 3 - System Information in your window.
+If you press the Run button the application should load on your smartphone, see the figure below.</p>
 
       </div>
      
