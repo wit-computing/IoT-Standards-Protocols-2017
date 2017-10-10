@@ -1,0 +1,336 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+<style>
+  
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+</style>
+
+<div class="ui fixed top pointing inverted menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    <a href="../index.html">
+      LPWAN
+    </a>
+  </header>
+  <div class="right tab-menu menu">
+    
+    <a class="item" data-tab="LPWAN-Lab1">
+      LPWAN-Lab1
+    </a>
+    
+    <a class="item" data-tab="Equipment">
+      Equipment
+    </a>
+    
+    <a class="item" data-tab="PyMkr">
+      PyMkr
+    </a>
+    
+    <a class="item" data-tab="Send message">
+      Send message
+    </a>
+    
+    <a class="item" href="../../index.html">
+      <i class="home icon"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    
+      
+        <a class="item" href="../../topic01/book-1-I2C/index.html">
+          serial-comms-lab-01
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-1/index.html">
+          BLE-Beacons
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-2/index.html">
+          Intro
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-3-assignment/index.html">
+          Assignment
+        </a>
+      
+    
+      
+        <a class="active item" href="../../topic03/book-1/index.html">
+          LPWAN-Lab1
+        </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+      <div  class="ui tab segment lab" data-tab="LPWAN-Lab1">
+        <h1>LPWAN Introduction with Sigfox</h1>
+<p>Low-Power Wide-Area Network (LPWAN) is wireless wide area network designed for long range communications at a low bit rate among things (connected objects). This lab will introduce Sigfox, a proprietry LPWAN and the SiPy multiprotocol development board.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Equipment">
+        <h1>Equipment</h1>
+<ul>
+<li>Laptop</li>
+<li>SiPy development board</li>
+<li>PyCom expansion board</li>
+<li>MicroSD cable</li>
+</ul>
+<h2>Pre-Setup Tasks</h2>
+<h3>Sigfox backend password</h3>
+<p>Check your email, you should have recieved a mail from <em>backend-noreply@sigfox.com</em> with the topic &quot;How to set your password&quot;.
+Follow the instructions contained in the mail to set your password for the Sigfox backend.</p>
+<h3>PyCom Firmware Updater</h3>
+<p>Go to <a href="https://docs.pycom.io/chapter/gettingstarted/installation/firmwaretool.html">Pycom update tools</a> and follow the download instructions for your particular Operating system. Install the tool annd make sure that it opens correctly.</p>
+<h2>Put SiPy in Upgrade Mode</h2>
+<p>You will need to put the SiPy in Upgrade mode in order to obtain an ID and PAC for your SigFox Device.
+Do this by connecting the G23 pin to the GND pin with a jumper wire 
+<img src="./img/upgrade.jpg" alt="SiPy Upgrade Mode"></p>
+<h2>Upgrade the SiPy</h2>
+<p>Connect the SiPy in upgrade mode to your computer and run the firmware upgrade tool. 
+Follow the instructions carefully</p>
+<blockquote>
+<blockquote>
+<p>NOTE: MAKE SURE TO SELECT SIPY FOR THE BOARD AND EUROPE AS THE REGION. OTHERWISE YOU MAY NOT GET THE CORRECT PAC AND ID.</p>
+</blockquote>
+</blockquote>
+<p>Completing the uprgrade should provide a new ID and PAC number for the device. Record the ID and PAC. You&#39;re ready to go... 
+<img src="./img/ID.png" alt="ID and PAC"></p>
+<h2>Activate Device</h2>
+<p>Go to (the sigfox activation page)[<a href="https://backend.sigfox.com/activate">https://backend.sigfox.com/activate</a>]. You will see a list of Sigfox-enabled development kits; select Pycom for activating the SiPy.:
+<img src="./img/activate.png" alt="Activate"></p>
+<p>Now, for the country, find and select Ireland (the VT logo):
+<img src="./img/vt.png" alt="Select Country"> </p>
+<p>For Device information, enter the ID and PAC number obtained in the <em>Upgrade to SiPy</em> step. Y Enter the Device ID and PAC number that the Firmware Tool generated for you earlier and fill in the required information. When completed you&#39;ll receive an email from Sigfox confirming your account.</p>
+<p>You should now be in a position to use the device on the Sigfox network.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="PyMkr">
+        <h2>Installing Pymakr Plugin (Atom)</h2>
+<p>Get Atom from here <a href="https://atom.io/"></a>.</p>
+<ul>
+<li>Navigate to the Install page, via Atom &gt; Preferences &gt; Install</li>
+<li>Search for Pymakr and select the official Pycom Pymakr Plugin.</li>
+<li>Click the install button to download and install the Pymakr Plugin.</li>
+</ul>
+<p><img src="./img/atom-text-editor.png" alt="Atom IDE"></p>
+<p>You should now be able to use Atom to program the SiPi</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Send message">
+        <h2>Writing code for the SiPy</h2>
+<p>Connect your SiPy to your computer and launch Atom and start the pyMkr add on.</p>
+<p>Create a new file called <em>hello_world.py</em> and enter the following code</p>
+<pre><code class="lang-python">from network import Sigfox
+import socket
+
+# init Sigfox for RCZ1 (Europe) 
+sigfox = Sigfox(mode=Sigfox.SIGFOX, rcz=Sigfox.RCZ1) 
+
+# create a Sigfox socket 
+s = socket.socket(socket.AF_SIGFOX, socket.SOCK_RAW)
+
+# make the socket blocking 
+s.setblocking(True) 
+
+# configure it as uplink only 
+s.setsockopt(socket.SOL_SIGFOX, socket.SO_RX, False) 
+
+# send some bytes 
+s.send(&quot;Hello World&quot;)</code></pre>
+<h2>Check for messages</h2>
+<p>You should now be able to see your message on the Sigfox Backend. Go to <a href="https://backend.sigfox.com"></a>, login and click on the &#39;Device&#39; tab. You should see your SiPy in the list below; click on it&#39;s ID and then select the &#39;Messages&#39; tab at the side.</p>
+<p>You&#39;ll see a string of hexadecimal numbers. Sigfox automatically decodes your message as raw hexadecimal so your message &quot;Hello World&quot; should look something like &quot;48656C6C6F20576F726C64&quot;.</p>
+<p>Open the &quot;Device Type&quot; tab and choose the &quot;Pycom Kit&quot;. You&#39;ll be presented with an information screen. Find an &quot;Edit&quot; button. Under &quot;Display&quot;, you can choose to set the type as String; this will turn your messy hexadecimal message into a more readable ASCII message.</p>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+  <div class="ui bottom fixed borderless right menu">
+    <div class="ui right tiny menu">
+      <div class="ui mini message segment">
+        Frank Walsh (fxwalsh@wit.ie).
+        <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank">Creative Commons License
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on('keydown', function (e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+</script>
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>
