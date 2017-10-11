@@ -188,9 +188,12 @@ body
 <li>MicroSD cable</li>
 </ul>
 <h2>Pre-Setup Tasks</h2>
-<h3>Sigfox backend password</h3>
-<p>Check your email, you should have recieved a mail from <em>backend-noreply@sigfox.com</em> with the topic &quot;How to set your password&quot;.
-Follow the instructions contained in the mail to set your password for the Sigfox backend.</p>
+<h3>Expansion board</h3>
+<p>Connect the SiPy module to the Expansion Board:
+- Look for the reset button on the module (located at a corner of the board, next to the LED).
+- Locate the USB connector on the expansion board.
+- Insert the module on the expansion board with the reset button pointing towards the USB connector. It should firmly click into place and the pins should now no longer be visible.
+<img src="./img/module.png" alt="SiPy Module and expansion board"></p>
 <h3>PyCom Firmware Updater</h3>
 <p>Go to <a href="https://docs.pycom.io/chapter/gettingstarted/installation/firmwaretool.html">Pycom update tools</a> and follow the download instructions for your particular Operating system. Install the tool annd make sure that it opens correctly.</p>
 <h2>Put SiPy in Upgrade Mode</h2>
@@ -208,11 +211,14 @@ Follow the instructions carefully</p>
 <p>Completing the uprgrade should provide a new ID and PAC number for the device. Record the ID and PAC. You&#39;re ready to go... 
 <img src="./img/ID.png" alt="ID and PAC"></p>
 <h2>Activate Device</h2>
-<p>Go to (the sigfox activation page)[<a href="https://backend.sigfox.com/activate">https://backend.sigfox.com/activate</a>]. You will see a list of Sigfox-enabled development kits; select Pycom for activating the SiPy.:
+<h3>Sigfox backend password</h3>
+<p>Check your email, you should have recieved a mail from <em>backend-noreply@sigfox.com</em> with the topic &quot;How to set your password&quot;.
+Follow the instructions contained in the mail to set your password for the Sigfox backend.
+Go to (the sigfox activation page)[<a href="https://backend.sigfox.com/activate">https://backend.sigfox.com/activate</a>]. You will see a list of Sigfox-enabled development kits; select Pycom for activating the SiPy.:
 <img src="./img/activate.png" alt="Activate"></p>
 <p>Now, for the country, find and select Ireland (the VT logo):
 <img src="./img/vt.png" alt="Select Country"> </p>
-<p>For Device information, enter the ID and PAC number obtained in the <em>Upgrade to SiPy</em> step. Y Enter the Device ID and PAC number that the Firmware Tool generated for you earlier and fill in the required information. When completed you&#39;ll receive an email from Sigfox confirming your account.</p>
+<p>For Device information, enter the ID and PAC number obtained in the <em>Upgrade to SiPy</em> step. Enter the Device ID and PAC number that the Firmware Tool generated for you earlier and fill in the required information. When completed you&#39;ll receive an email from Sigfox confirming your account.</p>
 <p>You should now be in a position to use the device on the Sigfox network.</p>
 
       </div>
