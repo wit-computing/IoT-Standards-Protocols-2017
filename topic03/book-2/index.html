@@ -133,6 +133,14 @@ body
       Sigfox Callback
     </a>
     
+    <a class="item" data-tab="Validation">
+      Validation
+    </a>
+    
+    <a class="item" data-tab="MongoDB">
+      MongoDB
+    </a>
+    
     <a class="item" href="../../index.html">
       <i class="home icon"></i>
     </a>
@@ -318,6 +326,97 @@ You should get something like the following in your console :</p>
 <pre><code class="lang-json">POST{&quot;data&quot;:&quot;48656c6c6f20576f726c64&quot;}
 POST /data/ 200 141.957 ms - 15</code></pre>
 <p>In order to continue the testing without using sigfox, you can continue with the Rest client. </p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Validation">
+        <h3>Validation</h3>
+<p>No that the communication to the middleware server is reasonably secure, we should now validate the data recieved from the Sigfox backend
+Install express-validator :</p>
+<pre><code class="lang-bash">npm install -S express-validator</code></pre>
+<p>Add this to the app.js</p>
+<pre><code class="lang-javascript">var validator = require(&quot;express-validator&quot;);
+…
+app.use(validator()); // This MUST be right after app.use(bodyParser.urlencoded({ extended: false }));</code></pre>
+<p>Now modify our router POST function in </router/index.js> to add the validations :</p>
+<pre><code class="lang-javascript">/* POST data */
+    router.post(&#39;/data&#39;, auth.basicAuthentication, function(req, res, next) {
+   console.log(&quot;POST&quot; + JSON.stringify(req.body));
+
+    req.checkBody(&quot;data&quot;, &quot;Did not recieve valid data&quot;).notEmpty().isAlpha();//YOU CAN MODIFY THIS TO SUIT YOUR OWN PURPOSES.
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        res.send(errors);
+        return;
+    } else {
+        // Normal processing
+        // return the body received
+        res.send(&quot;Post successfull&quot;);
+    }
+
+});</code></pre>
+<p><strong>At this point you MUST create your custom validation for your data pattern.</strong></p>
+<p>You now have a working server that will accept incoming data from Sigfox callbacks. We will now store the data in a suitable data store (MongoDB).</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="MongoDB">
+        <h2>Mongo</h2>
+<h3>mLab</h3>
+<p>mLab is a Database-as-a-Service for MongoDB, a no-SQL database. To get started with mLab, you must first create a mLab account. When that’s complete, you can a database for our Sigfox generated data.</p>
+<h4>Database Subscription</h4>
+<p>On your account’s Home page, click the “Create new” button.
+Make all the desired selections and fill in the requested fields.
+<strong>Make sure to choose the Sandbox/Fee option</strong>
+Create a new database called <strong>sigfox_data</strong> with the following configuration:</p>
+<ul>
+<li>cloud provider: Amazon, location: EU(Ireland)</li>
+<li>plan: Single Node, Sandbox (free)</li>
+<li>database name: sigfox_data</li>
+</ul>
+<p>Review your choices and when you’re ready, click the “Submit Order” button.
+Your new deployment should be listed on your account’s Home page.
+You will now be able to navigate to its home (administrative) page.</p>
+<h3>MongoDB</h3>
+<p>Use NPM to install mongobd in your Node application:</p>
+<pre><code class="lang-bash">npm install -S mongodb</code></pre>
+<p>It would be a good idea to externalise your authentication credentials in a config file. Create a new config file called <em>config.js</em> in the sigfoxMqtt folder and enter the following:</p>
+<pre><code class="lang-javascript">var config = {};
+
+config.dbUser =&#39;YOUR_USER&#39; ;
+config.dbPassword = &#39;YOUR_PASSWORD&#39;;
+
+module.exports = config;</code></pre>
+<p>Every time data is recieved from Sigfox backend, the service should insert the data into a mongo Collection. Modify our router POST function in </router/index.js> to include the following code:</p>
+<pre><code class="lang-javascript">...
+var config = require(&quot;../config.js&quot;);
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+// Connection URL. GET THIS URL FROM YOUR mLAB database admin page
+var url = &#39;mongodb://&#39;+config.dbUser+&#39;:&#39;+config.dbPassword+&#39;@YOUR_DB.mlab.com:21965/sigfox_data&#39;;
+
+...
+
+/* POST data */
+router.post(&#39;/data&#39;, auth.basicAuthentication, function(req, res, next){
+    console.log(&quot;POST: &quot; + JSON.stringify(req.body));
+
+    // Use connect method to connect to the Server
+    MongoClient.connect(url, function(err, db) {
+        console.log(&quot;Connected to DB&quot;);
+        var collection = db.collection(&#39;sensor_data&#39;);
+        collection.insertOne(
+            req.body, function(err, result) {
+                console.log(&quot;Inserted document into the sensor_data collection&quot;);
+                res.send(&quot;Post Successful&quot;);
+            });
+    });
+});
+
+...</code></pre>
+<p>You now have a server that will store incoming data from Sigfox callbacks in a data store (MongoDB).
+Test the service with your Rest client and check that the data is correctly stored in the database.</p>
 
       </div>
      
