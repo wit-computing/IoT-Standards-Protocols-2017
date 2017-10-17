@@ -1,0 +1,399 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+<style>
+  
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+</style>
+
+<div class="ui fixed top pointing inverted menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    <a href="../index.html">
+      LPWAN
+    </a>
+  </header>
+  <div class="right tab-menu menu">
+    
+    <a class="item" data-tab="LPWAN-Lab2">
+      LPWAN-Lab2
+    </a>
+    
+    <a class="item" data-tab="Middleware">
+      Middleware
+    </a>
+    
+    <a class="item" data-tab="REST Test">
+      REST Test
+    </a>
+    
+    <a class="item" data-tab="Authentication">
+      Authentication
+    </a>
+    
+    <a class="item" data-tab="Sigfox Callback">
+      Sigfox Callback
+    </a>
+    
+    <a class="item" href="../../index.html">
+      <i class="home icon"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    
+      
+        <a class="item" href="../../topic01/book-1-I2C/index.html">
+          serial-comms-lab-01
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-1/index.html">
+          BLE-Beacons
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-2/index.html">
+          Intro
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-3-assignment/index.html">
+          Assignment
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic03/book-1/index.html">
+          LPWAN-Lab1
+        </a>
+      
+    
+      
+        <a class="active item" href="../../topic03/book-2/index.html">
+          LPWAN-Lab2
+        </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+      <div  class="ui tab segment lab" data-tab="LPWAN-Lab2">
+        <h1>Sigfox Callbacks</h1>
+<p>This lab will introduce Sigfox callbacks. You will create a simple middleware server that can recieve Sigfox callback requests.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Middleware">
+        <h2>Sigfox Callbacks</h2>
+<p>We will create a node.js server that will be called by Sigfox callbacks. This server will take the payload sent by the IOT device.</p>
+<p>The Server will act as a &quot;middleware&quot;. The middleware will take inbound data, check it, eventually reformat it and publish. We assume that this middleware will take only one deviceType, therefore only one callback. </p>
+<p>For testing and convenience, you will set up the middleware on your laptop.</p>
+<h3>Setup</h3>
+<p>Install <a href="https://localtunnel.github.io/www/">locatunnel</a>:</p>
+<pre><code class="lang-bash">npm install -g localtunnel</code></pre>
+<p>Run localtunnel as follows to obtain a URL</p>
+<pre><code class="lang-bash">lt --port 3000
+your url is: https://eomkvzpxzj.localtunnel.me</code></pre>
+<p>We will use Express application to create the middleware. Use the Express application generator tool, express-generator, to quickly create an application skeleton.
+The express-generator package installs the express command-line tool. Use the following command to do so: </p>
+<pre><code class="lang-bash">npm install express-generator -g</code></pre>
+<p>To generate our application skeleton, run the following:</p>
+<pre><code class="lang-bash">express sigfoxMiddleware</code></pre>
+<p>This will create a sigfoxMiddleware folder containing the skeleton app. Install dependencies and run it :</p>
+<pre><code class="lang-bash">cd sigfoxMiddleware/
+npm install
+nodemon start</code></pre>
+<p>Now if you go to <a href="http://localhost:3000">http://localhost:3000</a> or <a href="https://eomkvzpxzj.localtunnel.me">https://eomkvzpxzj.localtunnel.me</a> you should see :
+<img src="./img/express.png" alt="Express"></p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="REST Test">
+        <h2>Test the POST route</h2>
+<p>Now modify skeleton app to respond to data from Sigfox. 
+We will configure Sigfox to use HTTP POST requests to the server via the </data> route.
+For now we&#39;ll just ouput the request body to the console. 
+Add the POST data route to &#39;index.js&#39; as follows:</p>
+<pre><code class="lang-javascript">/* POST data */
+router.post(&#39;/data&#39;, function(req, res, next) {
+    console.log(&quot;POST : &quot; + JSON.stringify(req.body));
+    res.send(&quot;Post Successful&quot;);
+});</code></pre>
+<p>The server should restart automatically when any changes are detected. <strong>However, you may need to restart localtunnel</strong>
+Now you should install a Restful client. If you use Chrome, try one of the following:
+- <a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop">Postman Chrome Extension</a>
+- <a href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo">Advanced Rest Client</a></p>
+<p>Check the server is working properly by submitting the following request :</p>
+<pre><code class="lang-json">URL : your localtunnel url  /data/
+Method POST
+Header : Content-Type : application/json (if you forget this it won’t work)
+Body Raw JSON :
+{
+    &quot;time&quot; : &quot;{time}&quot;,
+    &quot;device&quot; : &quot;{device}&quot;,
+    &quot;duplicate&quot; : &quot;{duplicate}&quot;,
+    &quot;snr&quot; : &quot;{snr}&quot;,
+    &quot;rssi&quot; : &quot;{rssi}&quot;,
+    &quot;avgSnr&quot; : &quot;{avgSnr}&quot;,
+    &quot;station&quot; : &quot;{station}&quot;,
+    &quot;lat&quot; : &quot;{lat}&quot;,
+    &quot;lng&quot; : &quot;{lng}&quot;,
+    &quot;seqNumber&quot; : &quot;{seqNumber}&quot;,
+    &quot;data&quot; : &quot;{data}&quot;
+}</code></pre>
+<p>When you hit SEND you should see this in your console window :</p>
+<p><img src="./img/post.png" alt="Post Data"></p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Authentication">
+        <h3>Authentication</h3>
+<p>As the Middleware will be used by a single server (the Sigfox server) and will not change, we can use basic-auth-connect.
+Stop the Express server and install basic-auth-commect:</p>
+<pre><code class="lang-bash">npm install -S basic-auth</code></pre>
+<p>Create a new auth.js file in your sigfoxMiddleware folder and enter the following:</p>
+<pre><code class="lang-javascript">// Source : http://www.9bitstudios.com/2015/10/basic-authentication-in-node-js-express-applications-and-apis/
+
+var basicAuth = require(&#39;basic-auth&#39;);
+
+exports.basicAuthentication = function(req, res, next) {
+
+    function unauthorized(response) {
+        res.set(&#39;WWW-Authenticate&#39;, &#39;Basic realm=Authorization Required&#39;);
+        return res.sendStatus(401);
+
+    };
+
+    var user = basicAuth(req);
+
+    if (!user || !user.name || !user.pass) {
+        return unauthorized(res);
+    };
+
+    if (user.name === &#39;testUser&#39; &amp;&amp; user.pass === &#39;testPass&#39;) {
+        return next();
+    } else {
+        Console.error(&quot;Authorized : &quot; + user.name + &quot;:&quot; + user.pass);
+        return unauthorized(res);
+    };
+
+};</code></pre>
+<p>You can now protect any route by adding auth.basicAuthentication to the route middleware. &quot;route/index.js&quot; is now :</p>
+<pre><code class="lang-javascript">var auth = require(&quot;../auth.js&quot;);
+
+/* POST data */
+router.post(&#39;/data&#39;, auth.basicAuthentication, function(req, res, next){
+    console.log(&quot;POST&quot; + JSON.stringify(req.body));
+    res.send(&quot;Post Successful&quot;);
+});</code></pre>
+<p>This is <strong>VERY</strong> basic, but if we are using HTTPS between Sigfox servers and our middleware the authorization token will not be disclosed, so no risk for interception.</p>
+<p>Now to test this, go to your Rest cleint, choose basic Auth, and you should get the option to fill in your login and password. It should generate a HTTP header similar to the following:</p>
+<p>The header is</p>
+<pre><code class="lang-bash">Authorization : Basic dGVzdFVzZXI6dGVzdFBhc3M=</code></pre>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="Sigfox Callback">
+        <h3>Sigfox Callbacks</h3>
+<p>Go to <a href="https://backend.sigfox.com/">https://backend.sigfox.com/</a><br>Go to Device type and click on the type’s name,<br>Click Callbacks on the left hand side and new and Custom callback<br>The parameters for the callback are :  </p>
+<pre><code class="lang-json">Type DATA UPLINK
+Channel URL
+URL Pattern http://tgesxrvorp.localtunnel.me/data/
+HTTP Method POST
+Headers : Authorization : Basic dGVzdFVzZXIrdGVzdFBhc3MK // Change to your token
+Content type : application/json
+Body :
+{
+&quot;data&quot; : &quot;{data}&quot;
+}</code></pre>
+<p>You can now connect your sigfox board and send a message.
+Use the lab from last week to send the hello world message.
+You should get something like the following in your console :</p>
+<pre><code class="lang-json">POST{&quot;data&quot;:&quot;48656c6c6f20576f726c64&quot;}
+POST /data/ 200 141.957 ms - 15</code></pre>
+<p>In order to continue the testing without using sigfox, you can continue with the Rest client. </p>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+  <div class="ui bottom fixed borderless right menu">
+    <div class="ui right tiny menu">
+      <div class="ui mini message segment">
+        Frank Walsh (fxwalsh@wit.ie).
+        <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank">Creative Commons License
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on('keydown', function (e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+</script>
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>
