@@ -141,6 +141,10 @@ body
       MongoDB
     </a>
     
+    <a class="item" data-tab="CustomData">
+      CustomData
+    </a>
+    
     <a class="item" href="../../index.html">
       <i class="home icon"></i>
     </a>
@@ -183,6 +187,12 @@ body
       
         <a class="active item" href="../../topic03/book-2/index.html">
           LPWAN-Lab2
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic04/book-1/index.html">
+          Lab-PubSub-01
         </a>
       
     
@@ -417,6 +427,105 @@ router.post(&#39;/data&#39;, auth.basicAuthentication, function(req, res, next){
 ...</code></pre>
 <p>You now have a server that will store incoming data from Sigfox callbacks in a data store (MongoDB).
 Test the service with your Rest client and check that the data is correctly stored in the database.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="CustomData">
+        <h1>Custom Data</h1>
+<p>As discussed in class, Sigfox packet can contain 12 bytes of data.
+<img src="./img/sigfox_payload.png" alt="sigfox Payload">
+In order to make optimal use of this payload, it is worth examinint the byte requirements of each data item(or signal) you wish to transmit.
+For this part of the experiment, we will use the Pycom <a href="https://pycom.io/product/pysense/">Pysense</a>  expansion board to provide sensor data. In the absence of this you can use hard coded data or connect analog sensors connected to the regular expansion board. </p>
+<h4>Convering to byte array.</h4>
+<p>Up to now we have sent data in ascii format, with each character repersented by a one byte. This is not efficient for telemetry in numerical format. 
+In this example we will retrieve two sensor values from the pysense expansion board, temperature and light intensity.
+However you can skip the next step by substituting the sensor output for simulated values.</p>
+<h2>Setting up Pycom Sensor expansion board:</h2>
+<p>Follow the instructions <a href="https://docs.pycom.io/chapter/pytrackpysense/">here</a> to install the latest firmware and transfer the nessesary libraries to the PySense board.
+You can connect it to your laptop in the same way as the regular expansion board.
+We will use temperature and light sensor values.</p>
+<h2>Update code</h2>
+<p>If you&#39;re using the PySense board, the following code will send the temperature and light sensors. 
+You have only 12 bytes of data in the payload. The values we receive from the sensors are specified in the associated spec sheets. For example, the light sensor returns a 16 bit value. 
+For our purposes here, we will put the temperature value in the first 2 bytes and the light sensor in the next 2 bytes. The following code constructs a byte array using the temperature and light values. </p>
+<pre><code class="lang-python">from pysense import Pysense
+
+from SI7006A20 import SI7006A20
+
+from LTR329ALS01 import LTR329ALS01
+
+import time
+from network import Sigfox
+import socket
+
+py = Pysense()
+
+si = SI7006A20(py)
+
+lt = LTR329ALS01(py)
+
+# init Sigfox for RCZ1 (Europe)
+sigfox = Sigfox(mode=Sigfox.SIGFOX, rcz=Sigfox.RCZ1)
+
+# create a Sigfox socket
+s = socket.socket(socket.AF_SIGFOX, socket.SOCK_RAW)
+
+# make the socket blocking
+s.setblocking(True)
+
+# configure it as uplink only
+s.setsockopt(socket.SOL_SIGFOX, socket.SO_RX, False)
+
+#send temp and light every 30 seconds
+while True:
+    temperature = int(round(si.temperature()*100)) #send temp as rounded integer * 100
+    light = lt.light()[0]  #light 
+    print(str(temperature) + &quot;:&quot;+str(light))
+    messageBytes=bytes((temperature &amp; 0xff, ((temperature &gt;&gt; 8) &amp; 0xff),light &amp; 0xff, ((light &gt;&gt; 8) &amp; 0xff)))
+    s.send(messageBytes)
+    time.sleep(30)</code></pre>
+<p>If you don&#39;t have the PySense board, the following code will generate hard coded values in the same range. </p>
+<pre><code class="lang-python">from pysense import Pysense
+import time
+from network import Sigfox
+import socket
+
+py = Pysense()
+
+
+# init Sigfox for RCZ1 (Europe)
+sigfox = Sigfox(mode=Sigfox.SIGFOX, rcz=Sigfox.RCZ1)
+
+# create a Sigfox socket
+s = socket.socket(socket.AF_SIGFOX, socket.SOCK_RAW)
+
+# make the socket blocking
+s.setblocking(True)
+
+# configure it as uplink only
+s.setsockopt(socket.SOL_SIGFOX, socket.SO_RX, False)
+
+while True:
+    #temperature = int(round(si.temperature()*100))
+    temperature = 24
+    light = 350
+    print(str(temperature) + &quot;:&quot;+str(light))
+    messageBytes=bytes((temperature &amp; 0xff, ((temperature &gt;&gt; 8) &amp; 0xff),light &amp; 0xff, ((light &gt;&gt; 8) &amp; 0xff)))
+    s.send(messageBytes)
+    time.sleep(30)</code></pre>
+<p>Run the code on the Pycom boards. Log into the sigfox backend and check the values appear.</p>
+<h3>Sigfox Back End</h3>
+<p>To configure the back end to display the values correctly, go to the &quot;Device Type&quot; tab and choose the &quot;Pycom Kit&quot;. You&#39;ll be presented with an information screen and in the top right corner, you&#39;ll find an &quot;Edit&quot; button. Under &quot;Display&quot;, you can choose &quot;Custom Grammar&quot; to set custom configuration to &quot;temp::uint:16:little-endian light::uint:16:little-endian&quot;; this will turn your messy hexadecimal message into a more readable message.</p>
+<p><img src="./img/display.png" alt="Payload Display"></p>
+<p>Now, update the callback as follows to encode the data properly. For this you will change the   to discribe the structure of your message. Go to the &quot;Device Type&quot; tab and choose the &quot;Pycom Kit&quot;. Select CallBacks and click edit. Change the config as follows: </p>
+<p><img src="./img/callback.png" alt="Callback"></p>
+<p>Now start your Node.js middleware - you should see the temp and light values begin to appear in your MongoDB.</p>
+<h3>Update Middleware Validation</h3>
+<p>Now update the validator code in the <em>/routes/index.js</em> to validate the temperature and light data:</p>
+<pre><code class="lang-javascript">...
+req.checkBody(&quot;temp&quot;, &quot;Did not recieve valid data&quot;).notEmpty().isInt();
+req.checkBody(&quot;light&quot;, &quot;Did not recieve valid data&quot;).notEmpty().isInt();
+...</code></pre>
 
       </div>
      

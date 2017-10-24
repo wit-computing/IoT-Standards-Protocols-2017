@@ -108,13 +108,13 @@ body
   <header class="header item">
     <i id="toc" class="sitemap icon"></i>
     <a href="../index.html">
-      Bluetooth Low Energy
+      Messaging for IoT
     </a>
   </header>
   <div class="right tab-menu menu">
     
-    <a class="item" data-tab="Assignment">
-      Assignment
+    <a class="item" data-tab="Lab-PubSub-01">
+      Lab-PubSub-01
     </a>
     
     <a class="item" data-tab="01">
@@ -149,7 +149,7 @@ body
       
     
       
-        <a class="active item" href="../../topic02/book-3-assignment/index.html">
+        <a class="item" href="../../topic02/book-3-assignment/index.html">
           Assignment
         </a>
       
@@ -167,7 +167,7 @@ body
       
     
       
-        <a class="item" href="../../topic04/book-1/index.html">
+        <a class="active item" href="../../topic04/book-1/index.html">
           Lab-PubSub-01
         </a>
       
@@ -177,15 +177,80 @@ body
     <div class="ui basic segment">
       <br>
       
-      <div  class="ui tab segment lab" data-tab="Assignment">
-        <h2>Assignment Specification</h2>
-<p>You will create your own IoT solution using the technologies covered in class!</p>
+      <div  class="ui tab segment lab" data-tab="Lab-PubSub-01">
+        <h1>Publish Subscribe Messaging</h1>
+<p>In this lab you will add publish subscribe capability to the data from the last lab.</p>
 
       </div>
      
       <div  class="ui tab segment lab" data-tab="01">
-        <h2>Assignment Specification</h2>
-<p>Download the specification from <a href="./files/assignment.pdf">here</a> </p>
+        <h1>Publish  with PubNub</h1>
+<h3>Publish-Subscribe Service</h3>
+<p>Create an account with <a href="http://www.pubnub.com">PubNub</a> .</p>
+<h3>Update Node.js Middleware service</h3>
+<p>Update the contact service to publish to your PubNub publish subscribe service.
+Add the PubNub.js package to your service using NPM</p>
+<pre><code class="lang-bash">npm install pubnub --save</code></pre>
+<p>In the base folder of the project  folder, create a new module called <strong>events.js</strong> and add the following code. Use your keys from the PubNub:</p>
+<pre><code class="lang-javascript">&#39;use strict&#39;;
+// Pubnub service configuration
+// ===========================
+
+var PubNub = require(&#39;pubnub&#39;);
+
+var pubnub = new PubNub({
+            publishKey : &#39;YOUR_KEY&#39;,
+            subscribeKey : &#39;YOUR_KEY&#39;,
+            secretKey: &quot;YOUR_KEY&quot;,
+            ssl: true
+});
+
+
+
+module.exports = {
+  publish: function(channel, message){
+    pubnub.publish({
+             channel: channel,
+             message: JSON.stringify(message)},
+             function(status, response) {
+               if (status.error) {
+                 console.log(status)
+               } else {
+                 console.log(&quot;message Published w/ timetoken&quot;, response.timetoken)
+               }
+             });
+  },
+  subscribe: function(channel, callback){
+
+    pubnub.addListener({
+
+        message: function(m) {
+            // handle message
+            var msg = m.message; // The Payload
+            callback(msg);
+            }
+  });
+    // Subscribe to the demo_tutorial channel
+    pubnub.subscribe({
+        channels: [channel]
+    });
+  }
+}</code></pre>
+<p>In <strong>/routes/index.js</strong> add the following code just under the mongodb initialisation.</p>
+<pre><code>var dataEvent = require(&quot;../events.js&quot;)</code></pre>
+<p>Now add the following code to the callback function on creation of a contact:</p>
+<pre><code class="lang-javascript">dataEvent.publish(&#39;sigfox_data&#39;, req.body);</code></pre>
+<p>Test your service using your Restful client by posting {&quot;temp&quot;:23,&quot;light&quot;:123}. You should see a confirmation in the console that the message has been published.</p>
+<p>Create a new Node application that subscribes to your PubNub app and sends a confirmation mail every time a new contact event is created
+In the base folder of your service, create a new file called <strong>subscriber_app.js</strong> and add the following code, updating the key and domain values  from your MailGun account:</p>
+<pre><code class="lang-javascript">var dataEvent = require(&#39;./events&#39;);
+
+var  messageHandler = function(m) {
+            console.log(m);
+        }
+
+dataEvent.subscribe(&#39;sigfox_data&#39;, messageHandler)</code></pre>
+<p>Now test by adding a contact via your api. Make sure to include an email field in the contact object.</p>
 
       </div>
      
