@@ -121,6 +121,10 @@ body
       01
     </a>
     
+    <a class="item" data-tab="02">
+      02
+    </a>
+    
     <a class="item" href="../../index.html">
       <i class="home icon"></i>
     </a>
@@ -251,6 +255,32 @@ var  messageHandler = function(m) {
 
 dataEvent.subscribe(&#39;sigfox_data&#39;, messageHandler)</code></pre>
 <p>Now test by adding a contact via your api. Make sure to include an email field in the contact object.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="02">
+        <h1>Dashboard</h1>
+<p>Now that you have a functioning publish-subscribe service, we should create an app that can visualise/analyse the data. 
+There are a couple of solutions available to perform IoT analytics data:</p>
+<ul>
+<li><a href="https://thingsboard.io/">Thingsboard</a></li>
+<li><a href="https://thingspeak.com/">Thingspeak</a></li>
+<li><a href="https://freeboard.io/">Freeboard</a></li>
+</ul>
+<p>In this exercise we&#39;ll have a look at freeboard as it&#39;s simple to set up and it connects to PubNub services &quot;out of the box&quot;.</p>
+<h2>Freeboard</h2>
+<p>Freeboard is a browser-based Dashboarding solution for devices and IoT data. Begin by creating an account on <a href="https://freeboard.io/">Freeboard</a>.<br>Once you&#39;ve completed registration, you can start creating dashboards. </p>
+<h3>Temp &amp; Light Board</h3>
+<p>In this case, you will create a small dashboard that displays temperature and light data published from your device. In the right hand of the screen, enter &quot;Temp and Light&quot; in the name box and click the New button to display the empty board.
+<img src="./img/create.png" alt="Create new dashboard"></p>
+<p>In Datasources, add the following datasource:
+<img src="./img/datasource.png" alt="Add datasource"></p>
+<p>Select the &quot;Add Pane&quot; and, in the pane,  click &quot;+&quot; add a guage widget with the following settings:
+<img src="./img/gauge.png" alt="Gauge"></p>
+<p>Now click &quot;+&quot; add a Sparkline widget with the following settings:
+<img src="./img/sparkline.png" alt="Gauge"></p>
+<p>Now start your Express Middleware/local tunnel server and start generating data from your device. You should start to see the data being visualised on the dash:
+<img src="./img/freeboard.png" alt="Freeboard dash"></p>
 
       </div>
      
