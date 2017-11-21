@@ -1,0 +1,409 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+<style>
+  
+
+code
+{
+  font-family: "Monaco";
+  font-size: 110%;
+}
+
+img
+{
+  padding:1px;
+  border:1px solid black;
+}
+
+h1
+{
+  font-style:italic;
+  font-size:130%;
+  border-bottom:thin solid black;
+}
+
+h2
+{
+  font-size:110%;
+  border-bottom: thin solid black;
+}
+
+h3
+{
+  font-size:100%;
+  border-bottom: thin solid black;
+}
+
+body
+{
+  overflow-y: scroll;
+}
+
+.pushable > .pusher
+{
+  padding-bottom: 1.5rem;
+}
+
+.ui.segment.pushable
+{
+  margin: 0;
+  padding: 1rem 0;
+  overflow: visible;
+}
+
+
+
+</style>
+
+<div class="ui fixed top pointing inverted menu labmenu">
+  <header class="header item">
+    <i id="toc" class="sitemap icon"></i>
+    <a href="../index.html">
+      IoT Cloud Platforms
+    </a>
+  </header>
+  <div class="right tab-menu menu">
+    
+    <a class="item" data-tab="00">
+      00
+    </a>
+    
+    <a class="item" data-tab="AWS-IoT">
+      AWS-IoT
+    </a>
+    
+    <a class="item" data-tab="01">
+      01
+    </a>
+    
+    <a class="item" data-tab="02">
+      02
+    </a>
+    
+    <a class="item" data-tab="03">
+      03
+    </a>
+    
+    <a class="item" href="../../index.html">
+      <i class="home icon"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    
+      
+        <a class="item" href="../../topic01/book-1-I2C/index.html">
+          serial-comms-lab-01
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-1/index.html">
+          BLE-Beacons
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-2/index.html">
+          Intro
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic02/book-3-assignment/index.html">
+          Assignment
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic03/book-1/index.html">
+          LPWAN-Lab1
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic03/book-2/index.html">
+          LPWAN-Lab2
+        </a>
+      
+    
+      
+        <a class="item" href="../../topic04/book-1/index.html">
+          Lab-PubSub-01
+        </a>
+      
+    
+      
+        <a class="active item" href="../../topic05/book-01/index.html">
+          00
+        </a>
+      
+    
+  </div>
+  <div class="pusher" tabindex="-1">
+    <div class="ui basic segment">
+      <br>
+      
+      <div  class="ui tab segment lab" data-tab="00">
+        <h1>Connect your devices to AWS IoT using the Sigfox network</h1>
+<p>This lab explores using Sigfox with AWS. This lab is sourced from <a href="https://aws.amazon.com/blogs/iot/connect-your-devices-to-aws-iot-using-the-sigfox-network/">https://aws.amazon.com/blogs/iot/connect-your-devices-to-aws-iot-using-the-sigfox-network/</a></p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="AWS-IoT">
+        <h1>Connect your devices to AWS IoT using the Sigfox network</h1>
+<p>This lab explores using Sigfox with AWS. This lab is sourced from <a href="https://aws.amazon.com/blogs/iot/connect-your-devices-to-aws-iot-using-the-sigfox-network/">https://aws.amazon.com/blogs/iot/connect-your-devices-to-aws-iot-using-the-sigfox-network/</a></p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="01">
+        <h1>Send data from Sigfox to AWS IoT</h1>
+<p>In a previous lab you connected objects to the Sigfox network. In this lab you will configure the native AWS IoT connector to push your data to the AWS Cloud. To make things a bit more interesting, we will use AWS Simple Notification Service to publish the data and subscribe a SMS service</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig1-1.jpg" alt="Fig1"></p>
+<p>In order to implement this architecture, we are going to perform the following steps:</p>
+<ul>
+<li>Configure the AWS IoT Connector in the Sigfox Console</li>
+<li>Provision the necessary resources on AWS so Sigfox can send data into your AWS account securely through the AWS IoT connector using a CloudFormation script that will generate IAM roles and permissions.</li>
+<li>Manually create a rule in AWS IoT and a SNS topic so we can publish the data coming from Sigfox</li>
+</ul>
+<p>In our example, we are using the EU-West-01 region. Once you gain knowledge on how to configure the different pieces, then customize the implementation to fit your needs.</p>
+<p>First, log into the <a href="https://backend.sigfox.com/auth/login">Sigfox console</a>, go to the <em>“Callbacks”</em> section and click on the <em>“New”</em> button to create a new “<em>Callback”</em>.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig2.png" alt="Fig2"></p>
+<p>Now select the <em>“AWS IoT”</em> option as the type of <em>“Callback”.</em></p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig3.png" alt="Fig3"></p>
+<p>Please copy the “<em>External Id”</em> given to you in your clipboard, it will be useful later. The “<em>External Id”</em> is unique to your account and enables greater security when authorizing third party to access your AWS resources, you can find more information <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html">here</a>.</p>
+<p>Next click on <em>“Launch Stack”</em> and leave the <em>“CROSS_ACCOUNT”</em> option selected.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig4.jpg" alt="Fig4"></p>
+<p>This will redirect you to the AWS CloudFormation console, click <em>“Next”</em> on the first screen.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig5.png" alt="Fig5"></p>
+<p>On the following screen, enter the following inputs:</p>
+<ul>
+<li><em>Stack name:</em> Choose a meaningful name for the connector.</li>
+<li><em>AWSAccountId:</em> Input your AWS Account Id, <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/console_account-alias.html">you can find it here</a>.</li>
+<li><em>External Id:</em> Copy/paste the external Id given to you in the Sigfox console.</li>
+<li><em>Region:</em> Choose EU-West Region</li>
+<li><em>Topic Name:</em> Choose the topic name you wish to send data to.</li>
+</ul>
+<p>Click <em>“Next”</em> once you are ready.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig6.png" alt="Fig6"></p>
+<p>The next screen is optional, if you wish you can customize options (Tags, Permissions, Notifications) otherwise click on <em>“Next”</em> to continue with the default options. You should now be on the review screen, check the <em>“I acknowledge that AWS CloudFormation might create IAM resources”  _box and click on </em>“Create”_ to launch the CloudFormation stack.</p>
+<p>After a few minutes the provisioning should be completed.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig7.png" alt="Fig7"></p>
+<p>After selecting the AWS CloudFormation stack, click on the <em>“Outputs”</em> tab and copy the value for the <em>“ARNRole”</em> key, the <em>“Region”</em> key and the <em>“Topic”</em> key.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig8.jpg" alt="Fig8"></p>
+<p>Go Back to the Sigfox console and paste the values you copied from the <em>“Output”</em> section of the AWS CloudFormation stack. Please also fill out the <em>“Json Body”</em> field in the Sigfox console. This JSON represents the payload that will be sent to AWS IoT using the native connector and contains the payload from the connected device as well as some metadata. This is a point for future customization using the Sigfox documentation if you wish to do so.</p>
+<pre>{
+  "device" : "{device}",
+  "data" : "{data}",
+  "time" : "{time}",
+  "snr" : "{snr}",
+  "station" : "{station}",
+  "avgSnr" : "{avgSnr}",
+  "lat" : "{lat}",
+  "lng" : "{lng}",
+  "rssi" : "{rssi}",
+  "seqNumber" : "{seqNumber}"
+}</pre>
+
+<p>Finally, click <em>“Ok”</em>.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig9.jpg" alt="Fig9"></p>
+<p>You now have successfully created your callback and can visualize the data sent to it.</p>
+<p><img src="https://d2908q01vomqb2.cloudfront.net/f6e1126cedebf23e1463aee73f9df08783640400/2017/02/15/Fig10.png" alt="Fig10"></p>
+<p>Now that the data is being sent to AWS IoT via the native connector, we will create an AWS IoT Rule to store the data into an Amazon DynamoDB table.</p>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="02">
+        <h1>Create AWS Simple Notification Service Topic</h1>
+<p>Now that you&#39;re signed up for Amazon SNS, you&#39;re ready to create a topic. A topic is a communication channel to send messages and subscribe to notifications. It provides an access point for publishers and subscribers to communicate with each other. In this section you create a topic named <em>MyTopic</em>.</p>
+<h2>Create a new Topic</h2>
+<ol>
+<li><p>In the <a href="https://console.aws.amazon.com/sns/v2/home">Amazon SNS console</a>, click <strong>Create topic</strong>.</p>
+<p>The <strong>Create topic</strong> dialog box appears.</p>
+</li>
+<li><p>In the <strong>Topic name</strong> box, type the topic name <strong>sigfox</strong></p>
+</li>
+<li><p>Click <strong>Create topic</strong>.</p>
+<p>The new topic appears in the <strong>Topics</strong> page.</p>
+</li>
+<li><p>Select the new topic and then click the topic ARN.</p>
+<p>The <strong>Topic Details</strong> page appears.</p>
+<p><img src="./img/new_topic_details.png" alt="New Topic"></p>
+</li>
+<li><p>Copy the topic <strong>ARN</strong> for the next task.</p>
+</li>
+</ol>
+<h2>Subscribe to Sigfox Topic</h2>
+<p>To receive messages published to a topic, you have to subscribe an endpoint to that topic. An endpoint is a mobile app, web server, email address, or an Amazon SQS queue that can receive notification messages from Amazon SNS. Once you subscribe an endpoint to a topic and the subscription is confirmed, the endpoint will receive all messages published to that topic.</p>
+<p>In this section you subscribe an endpoint to the topic you just created in the previous section. You configure the subscription to send the topic messages to your email account.</p>
+<p><strong>To subscribe to a topic</strong></p>
+<ol>
+<li><p>Open the Amazon SNS console at <a href="https://console.aws.amazon.com/sns/v2/home"><a href="https://console.aws.amazon.com/sns/v2/home">https://console.aws.amazon.com/sns/v2/home</a></a>.</p>
+</li>
+<li><p>Click <strong>Create subscription</strong>.</p>
+<p>The <strong>Create Subscription</strong> dialog box appears.</p>
+</li>
+<li><p>In the <strong>Topic ARN</strong> field, paste the topic ARN you created in the previous task, for example: <code>arn:aws:sns:eu-west-1:111122223333:MyTopic</code>.</p>
+</li>
+<li><p>In the <strong>Protocol</strong> drop-down box, select <strong>Email</strong>.</p>
+</li>
+<li><p>In the <strong>Endpoint</strong> box, type an email address you can use to receive the notification.</p>
+<div class="aws-note">
+
+Important
+
+Entourage Users: Entourage strips out the confirmation URL. Type an email address you can access in a different email application.
+
+</div>
+</li>
+<li><p>Click <strong>Create subscription</strong>.</p>
+<div class="mediaobject"><img src="./img/new_subscribe.png" alt="email subscription"></div>
+</li>
+<li><p>Go to your email application and open the message from AWS Notifications, and then click the link to confirm your subscription.</p>
+<p>Your web browser displays a confirmation response from Amazon SNS.</p>
+</li>
+</ol>
+
+      </div>
+     
+      <div  class="ui tab segment lab" data-tab="03">
+        <h1>Add IoT Rule</h1>
+<p>Now, go to the AWS IoT console and create a new rule.</p>
+<p><img src="./img/new_rule.png" alt="new rule"></p>
+<p>Now we will send every message payload coming from Sigfox in its entirety to the SNS topic.Use  “sigfox” as the topic filter, and no conditions.</p>
+<p><img src="./img/message_source.png" alt="rule conditions"></p>
+<p>Next add an action, select “Send Message as SNS push Notification”.</p>
+<p>Select the SNS topic you created previously. In the SNS target select your topic and set the message format as &quot;raw&quot;. Finally, create a new role by clicking on the “Create a new role” button. Name it “SNSsigfox” and click again on the “Create a new role”, you can now select it in the drop-down list. Thanks to this IAM role, AWS IoT can push data on your behalf to the SNS topic using the proper permissions.</p>
+<p>Add the action to the rule and create the rule. You should now be able to visualize the newly created rule in the AWS Console.</p>
+<p>The final step is to go to your email and observe the messages from the SNS push.</p>
+<p>Using this example’s basic flow, you can now create other AWS IoT rules that route the data to other AWS services. You might want to perform archiving, analytics, machine learning, monitoring, alerting and other functions. </p>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+  <div class="ui bottom fixed borderless right menu">
+    <div class="ui right tiny menu">
+      <div class="ui mini message segment">
+        Frank Walsh (fxwalsh@wit.ie).
+        <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank">Creative Commons License
+        </a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on('keydown', function (e) {
+  e = e || window.event;
+  var nextTab;
+  switch (e.which || e.keyCode) {
+    case 37: // left
+      nextTab = $('.tab-menu a[data-tab].active').prev('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').last();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+
+    case 39: // right
+      nextTab = $('.tab-menu a[data-tab].active').next('a[data-tab]');
+      if (!nextTab.length) nextTab = $('.tab-menu a[data-tab]').first();
+      nextTab.click();
+      $('.pusher').focus();
+      break;
+  }
+});
+
+</script>
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>

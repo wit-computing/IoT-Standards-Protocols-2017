@@ -1,0 +1,221 @@
+ <!DOCTYPE html>
+ <html>
+   <head>
+
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     
+
+     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" type="text/css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/solarized-light.min.css" rel="stylesheet" />
+
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.address/1.6/jquery.address.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/languages/java.min.js"></script>
+     <script>hljs.initHighlightingOnLoad();</script>
+
+     
+
+     <style>
+       
+
+body 
+{
+  font-family: "Open Sans", "Helvetica", "Helvetica Neue",  "Arial", sans-serif;
+}
+
+figcaption
+{
+  margin-bottom: 20px;
+}
+
+.vertical-align
+{
+  display: flex;
+  align-items: center;
+}
+
+
+
+     </style>
+
+   </head>
+
+  <body>
+    
+
+
+
+
+
+
+
+  <header class="ui middle aligned center aligned stackable grid segment">
+
+    <a class="ui blue left corner label">
+  <div id="showTOC" class="popup" data-content="Reveal TOC">
+    <i id="toc" class="sitemap big  icon"></i>
+  </div>
+</a>
+
+    <div class="seven wide center aligned column">
+      <h2> IoT Cloud Platforms </h2>
+      <p> Single Topic </p>
+    </div>
+
+    
+<div class="two wide column sitemap">
+  <div class="popup" data-content="To the top level Topics for this Module...">
+    <a href="../index.html"> <i class="huge home icon"></i> Module </a>
+  </div>
+</div>
+
+    
+<div class="four wide column">
+  <div class="ui center aligned mini message segment">
+    Frank Walsh (fxwalsh@wit.ie).
+    <a  href="http://creativecommons.org/licenses/by-nc/4.0/" title="External link to http://creativecommons.org/licenses/by-nc/4.0/"
+        target="_blank">Creative Commons License
+    </a>
+  </div>
+</div>
+
+    
+<div class="ui two wide right aligned column">
+  <div class="ui left aligned middle aligned very basic grid">
+    <div class="row">
+      <div class="popup" data-content="All Slides in Course">
+        <a href="../talkwall.html"> <i class="large film icon"></i> All Slides </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="popup" data-content="All Labs in Course">
+        <a href="../labwall.html"> <i class="large lab icon"></i> All Labs </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </header>
+
+
+<div class="ui segment pushable">
+  <div class="ui inverted labeled icon left inline vertical sidebar menu">
+    <div class="header">
+      <a class="item" href="#">
+        IoT Cloud Platforms
+      </a>
+    </div>
+    <div class="menu">
+      
+      <a class="item" href="talk-01/aws.pdf">
+         AWS IoT talk
+      </a>
+      
+      <a class="item" href="book-01/index.html">
+        00
+      </a>
+      
+    </div>
+  </div>
+
+  <div class="pusher">
+    <div class="ui container">
+      <div class="ui basic segment">
+        <div class="ui four doubling stackable cards">
+          
+          
+  
+  <a class="ui raised link card" href="talk-01/aws.pdf" target="_blank">
+  
+    <div class="content">
+        <div class="right floated meta"> <i class="film large icon"></i></div>
+        <div class="header">  AWS IoT talk </div>
+    </div>
+    <div class="image">
+      <img class="ui bordered rounded image" src="talk-01/aws.png">
+    </div>
+    <div class="content">
+      <div class="description">
+         <p>This talk was delivered by Ian Massingham from AWS.</p>
+
+      </div>
+    </div>
+    
+  </a>
+
+          
+          
+  
+  <a class="ui raised link card" href="book-01/index.html">
+  
+    <div class="content">
+        <div class="right floated meta"> <i class="lab large icon"></i></div>
+        <div class="header"> 00 </div>
+    </div>
+    <div class="image">
+      <img class="ui bordered rounded image" src="book-01/img/main.jpg">
+    </div>
+    <div class="content">
+      <div class="description">
+         <p>This lab explores using Sigfox with AWS. This lab is sourced from <a href="https://aws.amazon.com/blogs/iot/connect-your-devices-to-aws-iot-using-the-sigfox-network/">https://aws.amazon.com/blogs/iot/connect-your-devices-to-aws-iot-using-the-sigfox-network/</a></p>
+
+      </div>
+    </div>
+    
+  </a>
+
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+
+    </footer>
+    <script>
+      $(document).ready(function () {
+  $('img').addClass('ui image');
+  $('.ui.embed').embed();
+
+  const $images = $('.lab img');
+  jQuery.each($images, function (i) {
+    if (($images[i].alt).length > 0) {
+      const divImg = $(document.createElement('div')).addClass('ui basic segment');
+      $($images[i]).wrap(divImg);
+      const divLabel = $(document.createElement('div')).addClass('ui blue ribbon label');
+      divLabel.append($images[i].alt);
+      $(divLabel).insertBefore($images[i]);
+    }
+  });
+
+  $('.ui.embed').embed();
+
+  $('.ui.menu .item')
+      .tab({
+        history: true,
+        historyType: 'hash',
+      });
+
+  $('.popup').popup();
+
+  $('.ui.sidebar')
+      .sidebar({ context: $('.pushable') })
+      .sidebar('setting', 'transition', 'slide out')
+      .sidebar('attach events', '#toc');
+});
+
+    </script>
+  </body>
+
+ </html>
